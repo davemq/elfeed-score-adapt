@@ -48,6 +48,6 @@
 
 ;; For "untag" ("r"), advise elfeed-search-untag-all-unread
 (advice-add (lookup-key elfeed-search-mode-map "r")
-            :after
+            :before
             #'elfeed-score-adaptive-dec-score
             )
