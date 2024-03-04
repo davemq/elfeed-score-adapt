@@ -83,7 +83,7 @@
   )
 
 (defun elfeed-score-adaptive-untag-unread (entries tags)
-  (when (eq tags 'unread)
+  (when (equal tags '(unread))
     (dolist (entry entries)
       (elfeed-score-adaptive-add-rules 'read entry)
       )
