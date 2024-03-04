@@ -82,9 +82,11 @@
   (elfeed-score-adaptive-add-rules 'show entry)
   )
 
-(defun elfeed-score-adaptive-read ()
-  (let ((entry (car (elfeed-search-selected))))
-    (elfeed-score-adaptive-add-rules 'read entry)
+(defun elfeed-score-adaptive-untag-unread (entries tags)
+  (when (eq tags 'unread)
+    (dolist (entry entries)
+      (elfeed-score-adaptive-add-rules 'read entry)
+      )
     )
   )
 
@@ -99,8 +101,6 @@
             #'elfeed-score-adaptive-show
             )
 
-;; For "untag" ("r"), advise elfeed-search-untag-all-unread
-(advice-add (lookup-key elfeed-search-mode-map "r")
-            :before
-            #'elfeed-score-adaptive-read
-            )
+;; For "untag" ("r"), hook elfeed-untag
+(add-hook 'elfeed-untag-hooks 'elfeed-score-adaptive-untag-unread)
+
