@@ -38,6 +38,11 @@
       )
     )
 
+(defun elfeed-score-adaptive-add-read-rules (entry)
+  "Add `'read` rules"
+  (elfeed-score-adaptive-add-rules 'read entry)
+  )
+
 (defun elfeed-score-adaptive-add-title-rule (title value)
   "Add a title rule"
   (ignore-errors
@@ -83,8 +88,8 @@
   )
 
 (defun elfeed-score-adaptive-read ()
-  (let ((entry (car (elfeed-search-selected))))
-    (elfeed-score-adaptive-add-rules 'read entry)
+  (let ((entries (elfeed-search-selected)))
+    (mapc #'elfeed-score-adaptive-add-read-rules entries)
     )
   )
 
