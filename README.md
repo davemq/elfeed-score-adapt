@@ -1,2 +1,3 @@
-# elfeed-score-adaptive
-Adaptive scoring for elfeed-score
+# elfeed-score-adapt
+
+Adaptive scoring for elfeed.
