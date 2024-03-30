@@ -93,19 +93,36 @@
     )
   )
 
-;; It would be nice if there were hooks for the various actions in the
-;; *elfeed-search* buffer, e.g. RET shows an entry, "r" untags unread entries,
-;; i.e. marks them as read. I think these are the ones I care about for now.
-;; The functions they call don't have hooks, so we'll have to advise them.
+(defun elfeed-score-adapt-enable ()
+  "Enable adaptive scoring for elfeed."
 
-;; For "show" (RET), advise elfeed-search-
-(advice-add (lookup-key elfeed-search-mode-map (kbd "RET"))
-            :after
-            #'elfeed-score-adapt-show
-            )
+  (interactive)
+  ;; It would be nice if there were hooks for the various actions in the
+  ;; *elfeed-search* buffer, e.g. RET shows an entry, "r" untags unread entries,
+  ;; i.e. marks them as read. I think these are the ones I care about for now.
+  ;; The functions they call don't have hooks, so we'll have to advise them.
 
-;; For "untag" ("r"), advise elfeed-search-untag-all-unread
-(advice-add (lookup-key elfeed-search-mode-map "r")
-            :before
-            #'elfeed-score-adapt-read
-            )
+  ;; For "show" (RET), advise elfeed-search-
+  (advice-add (lookup-key elfeed-search-mode-map (kbd "RET"))
+              :after
+              #'elfeed-score-adapt-show
+              )
+
+  ;; For "untag" ("r"), advise elfeed-search-untag-all-unread
+  (advice-add (lookup-key elfeed-search-mode-map "r")
+              :before
+              #'elfeed-score-adapt-read
+              )
+  )
+
+(defun elfeed-score-adapt-disable ()
+  "Disable adaptive scoring for elfeed."
+
+  (interactive)
+
+  (advice-remove (lookup-key elfeed-search-mode-map (kbd "RET"))
+		 #'elfeed-score-adapt-show)
+
+  (advice-remove (lookup-key elfeed-search-mode-map "r")
+		 #'elfeed-score-adapt-read)
+  )
