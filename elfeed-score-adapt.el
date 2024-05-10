@@ -2,6 +2,7 @@
 
 (require 'elfeed)
 (require 'elfeed-score)
+(require 'time-date)
 
 (provide 'elfeed-score-adapt)
 
@@ -43,6 +44,9 @@
   (elfeed-score-adapt-add-rules 'read entry)
   )
 
+(defun elfeed-score-adapt-get-comment ()
+  (format "(ADAPT %d)" (time-to-days nil)))
+
 (defun elfeed-score-adapt-add-title-rule (title value)
   "Add a title rule"
   (ignore-errors
@@ -50,7 +54,7 @@
 				  :text title
 				  :value value
 				  :type 's
-				  :comment "ADAPT")
+				  :comment (elfeed-score-adapt-get-comment))
 				 )
     )
   (elfeed-score-load-score-file elfeed-score-serde-score-file)
@@ -63,7 +67,7 @@
 				  :text authors
 				  :value value
 				  :type 's
-				  :comment "ADAPT")
+				  :comment (elfeed-score-adapt-get-comment))
 				 )
     )
   (elfeed-score-load-score-file elfeed-score-serde-score-file)
@@ -77,7 +81,7 @@
 				  :attr 'u
 				  :value value
 				  :type 's
-				  :comment "ADAPT")
+				  :comment (elfeed-score-adapt-get-comment))
 				 )
     )
   (elfeed-score-load-score-file elfeed-score-serde-score-file)
