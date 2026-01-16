@@ -21,6 +21,13 @@
    "List of score actions to take for different elfeed-search entry actions"
   )
 
+;; Expiry days
+(defvar elfeed-score-adapt-expiry-days
+  7
+  "Number of days to maintain adaptive score information"
+)
+
+
 (defun elfeed-score-adapt-add-rules (action entry)
   "Add rules for entry based on items for action in `elfeed-score-adapt-alist'."
   (dolist (elt (cdr (assoc action elfeed-score-adapt-alist)))
@@ -132,3 +139,46 @@
   (advice-remove (lookup-key elfeed-search-mode-map "r")
 		 #'elfeed-score-adapt-read)
   )
+
+(defun elfeed-score-adapt-get-days (e)
+  "Get adaptive info from entry"
+  (let*
+      ((p (elfeed-score-serde-struct-to-plist e))
+       (c (plist-get p :comment))
+       (days (plist-get c 'adapt)))
+    days
+    )
+  )
+
+(defun elfeed-score-adapt-expirable (e)
+  "Determine if e is expirable."
+  (let ((days (elfeed-score-adapt-get-days e))
+	(today (time-to-days nil)))
+    (if days
+	(<= days (- today 7))
+      nil
+      )
+    )
+  )
+
+
+(defun elfeed-score-adapt-expire ()
+  "Expire entries with adaptive score information older than
+`elfeed-score-adapt-expiry-days' days."
+  (interactive)
+  ;;; For these lists, filter out old entries
+  (let ((lists (list elfeed-score-serde-title-rules
+		     elfeed-score-serde-feed-rules
+		     elfeed-score-serde-authors-rules
+		     elfeed-score-serde-content-rules
+		     elfeed-score-serde-title-or-content-rules
+		     elfeed-score-serde-tag-rules
+		     elfeed-score-serde-link-rules
+		     elfeed-score-serde-udf-rules
+		     elfeed-score-serde-adjust-tags-rules))
+	)
+    ;; I need a loop and macro here to set the list to the result of seq-remove
+    ;; or seq-filter on each list.
+    )
+  )
+
