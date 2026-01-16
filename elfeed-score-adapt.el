@@ -1,3 +1,5 @@
+;;; ...  -*- lexical-binding: t -*-
+
 ;; Add adaptive scoring to elfeed-score.
 
 (require 'elfeed)
@@ -45,7 +47,7 @@
   )
 
 (defun elfeed-score-adapt-get-comment ()
-  (format "(ADAPT %d)" (time-to-days nil)))
+  (list 'adapt (time-to-days nil)))
 
 (defun elfeed-score-adapt-add-title-rule (title value)
   "Add a title rule"
