@@ -161,7 +161,6 @@
     )
   )
 
-
 (defun elfeed-score-adapt-expire ()
   "Expire entries with adaptive score information older than
 `elfeed-score-adapt-expiry-days' days."
@@ -179,6 +178,6 @@
 	)
     ;; I need a loop and macro here to set the list to the result of seq-remove
     ;; or seq-filter on each list.
+    (dolist (l lists) (setq l (seq-remove #'elfeed-score-adapt-expirable l)))
     )
   )
-
