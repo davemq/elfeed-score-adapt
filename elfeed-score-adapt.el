@@ -170,25 +170,20 @@
   "Expire entries with adaptive score information older than
 `elfeed-score-adapt-expiry-days' days."
   (interactive)
-  ;;; For these lists, filter out old entries
-  (setq elfeed-score-serde-title-rules (elfeed-score-adapt-expire-list 
-					elfeed-score-serde-title-rules))
-  (setq elfeed-score-serde-feed-rules (elfeed-score-adapt-expire-list 
-				       elfeed-score-serde-feed-rules))
-  (setq elfeed-score-serde-authors-rules (elfeed-score-adapt-expire-list 
-					  elfeed-score-serde-authors-rules))
-  (setq elfeed-score-serde-content-rules (elfeed-score-adapt-expire-list 
-					  elfeed-score-serde-content-rules))
-  (setq elfeed-score-serde-title-or-content-rules 
-	(elfeed-score-adapt-expire-list 
-	 elfeed-score-serde-title-or-content-rules))
-  (setq elfeed-score-serde-tag-rules (elfeed-score-adapt-expire-list 
-				      elfeed-score-serde-tag-rules))
-  (setq elfeed-score-serde-link-rules (elfeed-score-adapt-expire-list 
-				       elfeed-score-serde-link-rules))
-  (setq elfeed-score-serde-udf-rules (elfeed-score-adapt-expire-list 
-				      elfeed-score-serde-udf-rules))
-  (setq elfeed-score-serde-adjust-tags-rules
-	(elfeed-score-adapt-expire-list 
-	 elfeed-score-serde-adjust-tags-rules))
+  (let ((lists '(elfeed-score-serde-title-rules
+		 elfeed-score-serde-feed-rules
+		 elfeed-score-serde-authors-rules
+		 elfeed-score-serde-content-rules
+		 elfeed-score-serde-title-or-content-rules
+		 elfeed-score-serde-tag-rules
+		 elfeed-score-serde-link-rules
+		 elfeed-score-serde-udf-rules
+		 elfeed-score-serde-adjust-tags-rules)))
+    (setq l (car lists))
+    (while l
+      `(setq ,l (elfeed-score-adapt-expire list ,l))
+      (setq l (car lists))
+      (setq lists (cdr lists))
+      )
+    )
   )
