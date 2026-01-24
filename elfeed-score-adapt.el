@@ -161,23 +161,30 @@
     )
   )
 
+(defun elfeed-score-adapt-expire-list (l)
+  "Expire entries by filtering out old, i.e. expirable, items."
+  (seq-remove #'elfeed-score-adapt-expirable l)
+  )
+
 (defun elfeed-score-adapt-expire ()
   "Expire entries with adaptive score information older than
 `elfeed-score-adapt-expiry-days' days."
   (interactive)
-  ;;; For these lists, filter out old entries
-  (let ((lists (list elfeed-score-serde-title-rules
-		     elfeed-score-serde-feed-rules
-		     elfeed-score-serde-authors-rules
-		     elfeed-score-serde-content-rules
-		     elfeed-score-serde-title-or-content-rules
-		     elfeed-score-serde-tag-rules
-		     elfeed-score-serde-link-rules
-		     elfeed-score-serde-udf-rules
-		     elfeed-score-serde-adjust-tags-rules))
+  (let ((lists '(elfeed-score-serde-title-rules
+		 elfeed-score-serde-feed-rules
+		 elfeed-score-serde-authors-rules
+		 elfeed-score-serde-content-rules
+		 elfeed-score-serde-title-or-content-rules
+		 elfeed-score-serde-tag-rules
+		 elfeed-score-serde-link-rules
+		 elfeed-score-serde-udf-rules
+		 elfeed-score-serde-adjust-tags-rules)))
+    (let ((l (car lists)))
+      (while l
+	`(setq ,l (elfeed-score-adapt-expire-list ,l))
+	(setq l (car lists))
+	(setq lists (cdr lists))
 	)
-    ;; I need a loop and macro here to set the list to the result of seq-remove
-    ;; or seq-filter on each list.
-    (dolist (l lists) (setq l (seq-remove #'elfeed-score-adapt-expirable l)))
+      )
     )
   )
