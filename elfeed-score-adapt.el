@@ -179,11 +179,12 @@
 		 elfeed-score-serde-link-rules
 		 elfeed-score-serde-udf-rules
 		 elfeed-score-serde-adjust-tags-rules)))
-    (setq l (car lists))
-    (while l
-      `(setq ,l (elfeed-score-adapt-expire list ,l))
-      (setq l (car lists))
-      (setq lists (cdr lists))
+    (let ((l (car lists)))
+      (while l
+	`(setq ,l (elfeed-score-adapt-expire-list ,l))
+	(setq l (car lists))
+	(setq lists (cdr lists))
+	)
       )
     )
   )
