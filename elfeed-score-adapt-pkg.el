@@ -1,4 +1,4 @@
-(define-package "elfeed-score-adapt" "0.5"
+(define-package "elfeed-score-adapt" "0.7"
   "Update elfeed score rules based on usage"
   '((elfeed-score "1.2.7")
     (elfeed "3.3.0")
