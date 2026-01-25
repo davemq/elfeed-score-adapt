@@ -181,10 +181,13 @@
 		 elfeed-score-serde-adjust-tags-rules)))
     (let ((l (car lists)))
       (while l
-	`(setq ,l (elfeed-score-adapt-expire-list ,l))
-	(setq l (car lists))
+	(eval `(setq ,l (elfeed-score-adapt-expire-list ,l)))
 	(setq lists (cdr lists))
+	(setq l (car lists))
 	)
       )
+    )
+  (if elfeed-score-serde-score-file
+      (elfeed-score-serde-write-score-file elfeed-score-serde-score-file)
     )
   )
