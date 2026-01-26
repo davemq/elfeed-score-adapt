@@ -1,0 +1,46 @@
+#+title: Adaptive Scoring for Elfeed
+#+author: Dave Marquardt
+#+email: daverrtx@gmail.com
+#+OPTIONS: ':t toc:t author:t email:t
+#+language: en
+#+texinfo_filename: elfeed-score-adapt.info
+#+texinfo_header: @syncodeindex pg cp
+#+texinfo_dir_category: elfeed
+#+texinfo_dir_name: elfeed-score-adapt
+#+texinfo_printed_title: Adaptive Scoring for Elfeed
+
+This manual is for Adaptive Scoring for Elfeed.
+
+* What is Scoring for Elfeed?
+
+Elfeed offers Gnus-style scoring to score articles based on various
+attributes, including
+
+- title
+- authors
+- feed URL
+
+These are written into a score file, typically
+@@texinfo:@file{elfeed.score}@@ in the user's Emacs directory,
+typically @@texinfo:@file{~/.emacs.d}@@. They can be written manually
+or through some interactive commands provided by the elfeed-score
+package.
+
+See @@texinfo:@xref{Scoring,,, gnus}@@ for more information on scoring
+in Gnus.
+
+See @@texinfo:@xref{,,, elfeed-score}@@ for more information on elfeed's
+Gnus-style scoring.
+
+* What is Adaptive Scoring for Elfeed?
+
+Gnus also provides adaptive scoring, updating score entries based on
+article attributes and user actions, like reading an article or
+marking it as read.
+
+This package bring adaptive scoring to Elfeed.
+
+* Index
+  :PROPERTIES:
+  :INDEX:    cp
+  :END:
