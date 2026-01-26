@@ -38,7 +38,49 @@ Gnus also provides adaptive scoring, updating score entries based on
 article attributes and user actions, like reading an article or
 marking it as read.
 
-This package bring adaptive scoring to Elfeed.
+This package brings adaptive scoring to Elfeed.
+
+* How do I enable adaptive scoring for Elfeed?
+
+To enable adaptive scoring for Elfeed, run this Emacs Lisp code:
+
+#+begin_src emacs-lisp
+(elfeed-score-adapt-enable)
+#+end_src
+
+If you want adaptive scoring enabled for every Emacs session, add the
+code to you init file.
+
+* Adaptive Scoring Rules
+
+Scoring rules are in src_emacs-lisp{elfeed-score-adapt-alist}. This is
+an association list (alist). The keys are a user action. There are two
+user actions defined:
+
+- read: the user marks the article as read
+- show: the user shows the article
+
+The values are one or more lists of scores to set for the various
+elements of the article.
+
+The default value of src_emacs-lisp{elfeed-score-adapt-alist} is
+
+#+begin_src emacs-lisp
+  '((read
+     (title -10))
+    (show
+     (authors 5)
+     (feed 2)
+     (title 30))
+    )
+#+end_src
+
+Marking an article read will set the score for the article's title to
+-10, i.e.\nbsp{}an unfavorable score, since the user didn't want to read it.
+
+Showing an article will set a score of 5 for the authors, 2 for the
+feed URL, and 30 for the title. This favors this article's author,
+feed, and title for future scoring.
 
 * Index
   :PROPERTIES:
