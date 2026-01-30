@@ -185,3 +185,16 @@
       (elfeed-score-serde-write-score-file elfeed-score-serde-score-file)
     )
   )
+
+(defun elfeed-score-adapt-expire-enable ()
+  "Enable automatic expiration of score entries with adaptive information."
+  (interactive)
+  (elfeed-score-adapt-expire)
+  (advice-add #'elfeed-update :after #'elfeed-score-adapt-expire)
+  )
+
+(defun elfeed-score-adapt-expire-disable ()
+  "Disable automatic expiration of score entries with adaptive information."
+  (interactive)
+  (advice-remove #'elfeed-update #'elfeed-score-adapt-expire)
+  )
