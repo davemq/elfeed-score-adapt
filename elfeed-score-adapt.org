@@ -49,7 +49,14 @@ To enable adaptive scoring for Elfeed, run this Emacs Lisp code:
 #+end_src
 
 If you want adaptive scoring enabled for every Emacs session, add the
-code to you init file.
+code to your init file.
+
+If you decide you want to stop adaptively scoring articles, run
+
+#+begin_src emacs-lisp
+(elfeed-score-adapt-disable)
+#+end_src
+
 
 * Adaptive Scoring Rules
 
@@ -61,7 +68,8 @@ user actions defined:
 - show: the user shows the article
 
 The values are one or more lists of scores to set for the various
-elements of the article.
+elements of the article. Only authors, feed, and title are supported
+at this time.
 
 The default value of src_emacs-lisp{elfeed-score-adapt-alist} is
 
@@ -75,12 +83,47 @@ The default value of src_emacs-lisp{elfeed-score-adapt-alist} is
     )
 #+end_src
 
-Marking an article read will set the score for the article's title to
--10, i.e.\nbsp{}an unfavorable score, since the user didn't want to read it.
+Marking an article read will add -10 to the score for the article's
+title, i.e.\nbsp{}an unfavorable score, since the user didn't want to
+read it.
 
-Showing an article will set a score of 5 for the authors, 2 for the
-feed URL, and 30 for the title. This favors this article's author,
-feed, and title for future scoring.
+Showing an article will add 5 to the score for the authors, add 2 to
+the score for the feed URL, and add 30 to the score for the title.
+This favors this article's author, feed, and title for future scoring.
+
+If you'd like different score values for the various elements, you can
+set src_emacs-lisp{elfeed-score-adapt-alist} to your own prefered
+values.
+
+* Expiring adaptive score entries
+
+After using adaptive scoring for a while, you'll have built up a large
+number of score entries. You may want to stop using scores from a week
+or so ago as the topics are stale, or maybe your reading interests
+have changed in the meantime.
+
+Adaptive score expiry will expire, i.e. remove, adaptive score entries
+that are older than src_emacs-lisp{elfeed-score-adapt-expiry-days}
+days old. The default value is 7 days.
+
+To enable automatic expiry of old entries, run
+
+#+begin_src emacs-lisp
+(elfeed-score-adapt-expire-enable)
+#+end_src
+
+If you want to stop automatically expiring old entries, run
+
+#+begin_src emacs-lisp
+(elfeed-score-adapt-expire-disable)
+#+end_src
+
+If you'd just like to expire old entries manually, you can run
+
+#+begin_src emacs-lisp
+(elfeed-score-adapt-expire)
+#+end_src
+
 
 * Index
   :PROPERTIES:
